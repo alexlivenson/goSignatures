@@ -1,6 +1,9 @@
 package main
 
-import "github.com/alexlivenson/signatureCollection/signatures"
+import (
+	"github.com/alexlivenson/signatureCollection/signatures"
+	"net/http"
+)
 
 /*
 Create a new MongoDB Session, using a database name "signatures".
@@ -9,5 +12,6 @@ HTTP Requests
  */
 func main() {
 	session := signatures.NewSession("signatures")
-	signatures.NewServer(session)
+	http.HandleFunc("/signatures", signatures.SignatureHandler(session))
+	http.ListenAndServe(":8090", nil)
 }
