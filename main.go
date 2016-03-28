@@ -5,13 +5,18 @@ import (
 	"net/http"
 )
 
+var session = signatures.NewSession("signatures")
 /*
 Create a new MongoDB Session, using a database name "signatures".
 Create a new server using that session, then begin listening for
 HTTP Requests
- */
+*/
 func main() {
-	session := signatures.NewSession("signatures")
-	http.HandleFunc("/signatures", signatures.SignatureHandler(session))
-	http.ListenAndServe(":8090", nil)
+	context := &signatures.AppContext{session}
+
+	//http.HandleFunc("/signatures", signatures.SignatureHandler(session))
+	//mux := mux.NewRouter().StrictSlash(true)
+
+	//http.ListenAndServe(":8090", nil)
+	http.ListenAndServe(":8090", signatures.NewSignatureRouter(context))
 }
