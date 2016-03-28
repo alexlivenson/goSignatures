@@ -1,8 +1,8 @@
 package signatures
 
 import (
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 type AppContext struct {
@@ -12,9 +12,9 @@ type AppContext struct {
 type AppContextHandler func(a *AppContext) http.HandlerFunc
 
 type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
+	Name           string
+	Method         string
+	Pattern        string
 	AppHandlerFunc AppContextHandler
 }
 
@@ -33,15 +33,21 @@ var routes = Routes{
 		"/signatures",
 		SignatureCreate,
 	},
+	Route{
+		"SignatureShow",
+		"GET",
+		"/signatures/{id}",
+		SignatureShow,
+	},
 }
 
 func NewSignatureRouter(a *AppContext) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		router.Methods(route.Method).
-		Path(route.Pattern).
-		Name(route.Name).
-		Handler(route.AppHandlerFunc(a))
+			Path(route.Pattern).
+			Name(route.Name).
+			Handler(Logger(route.AppHandlerFunc(a), route.Name))
 	}
 
 	return router

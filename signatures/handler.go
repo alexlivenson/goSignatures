@@ -2,6 +2,8 @@ package signatures
 
 import (
 	"encoding/json"
+	"github.com/gorilla/mux"
+	"labix.org/v2/mgo/bson"
 	"net/http"
 )
 
@@ -34,6 +36,23 @@ func SignatureCreate(a *AppContext) http.HandlerFunc {
 			} else {
 				w.WriteHeader(http.StatusBadRequest)
 			}
+		} else {
+			w.WriteHeader(http.StatusBadRequest)
+		}
+	}
+}
+
+func SignatureShow(a *AppContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		if id := vars["id"]; bson.IsObjectIdHex(id) {
+			db := a.Session.DB("signatures")
+
+			result, err := json.Marshal(findSignatureById(bson.ObjectIdHex(id), db))
+			if err != nil {
+				panic(err)
+			}
+			w.Write([]byte(string(result)))
 		} else {
 			w.WriteHeader(http.StatusBadRequest)
 		}

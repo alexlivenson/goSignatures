@@ -2,7 +2,10 @@
 
 package signatures
 
-import "labix.org/v2/mgo"
+import (
+	"labix.org/v2/mgo"
+	"labix.org/v2/mgo/bson"
+)
 
 /*
 Each signature is composed of first name, last name,
@@ -11,11 +14,12 @@ TitleCase for snake_case
 */
 
 type Signature struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Email     string `json:"email"`
-	Age       int    `json:"age"`
-	Message   string `json:"message"`
+	Id        bson.ObjectId `json:"id" bson:"_id,omitempty"`
+	FirstName string        `json:"first_name"`
+	LastName  string        `json:"last_name"`
+	Email     string        `json:"email"`
+	Age       int           `json:"age"`
+	Message   string        `json:"message"`
 }
 
 /*
@@ -42,4 +46,15 @@ func fetchAllSignatures(db *mgo.Database) []Signature {
 		panic(err)
 	}
 	return signatures
+}
+
+func findSignatureById(id bson.ObjectId, db *mgo.Database) Signature {
+	signature := Signature{}
+
+	err := db.C("signatures").FindId(id).One(&signature)
+
+	if err != nil {
+		panic(err)
+	}
+	return signature
 }
