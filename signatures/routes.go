@@ -39,6 +39,12 @@ var routes = Routes{
 		"/signatures/{id}",
 		SignatureShow,
 	},
+	Route{
+		"SignatureDelete",
+		"DELETE",
+		"/signatures/{id}",
+		SignatureDelete,
+	},
 }
 
 func NewSignatureRouter(a *AppContext) *mux.Router {

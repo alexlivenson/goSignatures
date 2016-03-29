@@ -52,9 +52,16 @@ func findSignatureById(id bson.ObjectId, db *mgo.Database) Signature {
 	signature := Signature{}
 
 	err := db.C("signatures").FindId(id).One(&signature)
-
 	if err != nil {
 		panic(err)
 	}
 	return signature
+}
+
+func removeSignatureById(id bson.ObjectId, db *mgo.Database) error {
+	err := db.C("signatures").RemoveId(id)
+	if err != nil {
+		return err
+	}
+	return nil
 }
