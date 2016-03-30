@@ -47,14 +47,11 @@ var routes = Routes{
 	},
 }
 
-func NewSignatureRouter(a *AppContext) *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
+func AppendSignatureRouter(router *mux.Router, a *AppContext) {
 	for _, route := range routes {
 		router.Methods(route.Method).
 			Path(route.Pattern).
 			Name(route.Name).
 			Handler(Logger(route.AppHandlerFunc(a), route.Name))
 	}
-
-	return router
 }
