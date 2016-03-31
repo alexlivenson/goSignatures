@@ -1,0 +1,31 @@
+{
+  "name": "alexlivenson.signature_collection",
+  "version": "1.0.0",
+  "description": "Signature Collections",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexlivenson/goSignatures.git"
+  },
+  "author": "alex livenson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexlivenson/goSignatures/issues"
+  },
+  "homepage": "https://github.com/alexlivenson/goSignatures#readme",
+  "dependencies": {
+    "react": "^0.14.8"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.4",
+    "babel-loader": "^6.2.4",
+    "file-loader": "^0.8.5",
+    "jsx-loader": "^0.13.2",
+    "react-hot-loader": "^1.3.0",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

@@ -8,7 +8,7 @@ import (
 )
 
 var session = signatures.NewSession("signatures")
-var templates = template.Must(template.ParseFiles("views/index.html"))
+var templates = template.Must(template.ParseFiles("public/views/index.html"))
 
 /*
 Create a new MongoDB Session, using a database name "signatures".
