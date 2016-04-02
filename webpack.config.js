@@ -1,4 +1,6 @@
 // Reference: https://robots.thoughtbot.com/setting-up-webpack-for-react-and-hot-module-replacement
+var webpack = require('webpack');
+
 module.exports = {
     context: __dirname + "/public",
     /*
@@ -9,6 +11,16 @@ module.exports = {
         javascript: "./js/index.js",
         html: "./views/index.html"
     },
+    output: {
+        filename: "bundle.js",
+        path: __dirname + "/dist"
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery"
+        })
+    ],
     /*
      Webpack accepts an array of loader objects which specify loaders to apply to files that match the test regex
      and exclude files that match `exclude` regex. In this case, applying `babel-loader` to all files with .js
@@ -25,10 +37,9 @@ module.exports = {
         }, {
             test: /\.html$/,
             loader: "file?name=[name].[ext]"
+        }, {
+            test: /\.css$/,
+            loader: "style!css!" // style!css! => take css and pipe to css loader and then to style loader
         }]
-    },
-    output: {
-        filename: "index.js",
-        path: __dirname + "/dist"
     }
 };

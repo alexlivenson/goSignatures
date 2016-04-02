@@ -23,6 +23,10 @@ func main() {
 		Path("/").
 		Name("IndexHandler").
 		HandlerFunc(signatures.Logger(IndexHandler, "IndexHandler"))
+
+	fs := http.FileServer(http.Dir("./dist/"))
+	router.PathPrefix("/dist/").Handler(http.StripPrefix("/dist/", fs))
+
 	signatures.AppendSignatureRouter(router, context)
 	http.ListenAndServe(":8090", router)
 }

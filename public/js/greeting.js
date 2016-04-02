@@ -3,12 +3,14 @@
  */
 import React from 'react';
 
-export default React.createClass({
-    render: function () {
+class Greeting extends React.Component {
+    render() {
         return (
             <div className="greeting">
                 Hello, {this.props.name}!
             </div>
         );
     }
-})
+}
+
+export default Greeting
